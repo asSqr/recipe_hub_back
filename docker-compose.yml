@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    container_name: postgres_db
+    container_name: postgres_db_recipe_hub
     image: postgres:latest
     environment:
       POSTGRES_HOST_AUTH_METHOD: "trust"
@@ -13,7 +13,7 @@ services:
       - 5432:5432
   
   backend:
-    container_name: back-api
+    container_name: back_api_recipe_hub
     build:
       context: ./backend
       dockerfile: Dockerfile
