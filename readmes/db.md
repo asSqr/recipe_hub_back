@@ -55,7 +55,7 @@ docker-compose exec db pg_dump --no-acl --no-owner -h localhost -U postgres reci
 以下でバックアップを restore します．
 
 ```
-docker cp db/dump.sql postgres_db:/tmp
+docker cp db/dump.sql postgres_db_recipe_hub:/tmp
 docker-compose exec db psql -U postgres -f /tmp/dump.sql
 ```
 

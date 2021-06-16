@@ -1,8 +1,8 @@
 ## Setup(Docker)
 
 - コンテナは以下の 3 つ。`docker-compose.yml`に詳細
-  - postgres_db
-  - back-api(`backend`に Dockerfile)
+  - postgres_db_recipe_hub
+  - back_api_recipe_hub(`backend`に Dockerfile)
 - [ここのセットアップ手順](https://hodalog.com/tutorial-django-rest-framework-and-react/#index-toc-8)を参考に作成
 
 ### Local で動かし，ダミーデータを入れるには (ローカルで動かす場合まずここを参照してください)
