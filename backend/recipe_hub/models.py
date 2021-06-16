@@ -6,7 +6,7 @@ class MyUUIDModel(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
 class MRepository(MyUUIDModel):
-  id_fork_from = models.CharField(max_length=36)
+  id_fork_from = models.CharField(max_length=36, null=True, blank=True)
   name = models.CharField(max_length=8192)
   recipe = models.CharField(max_length=16384)
   id_author = models.CharField(max_length=36)
