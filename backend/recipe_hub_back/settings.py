@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'recipe_hub',  # app
     'rest_framework',  # django-rest
     'corsheaders',  # 認証
@@ -91,17 +92,9 @@ WSGI_APPLICATION = 'recipe_hub_back.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USERNAME'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_ENDPOINT'),
-        'PORT': os.getenv('DB_PORT')
-    }
 }
 
-# DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config()
 
 try:
   from .local_settings import *
@@ -150,6 +143,7 @@ STATIC_URL = '/static/'
 # TODO: 本番ビルド時はlocalhost等を無効化する
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'https://recipe-hub-front.vercel.app'
 ]
 
 CORS_ALLOW_METHODS = [
@@ -177,14 +171,25 @@ CORS_ALLOW_CREDENTIALS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        #'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.AllowAny'
+        'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+    'DEFAULT_FILTER_BACKENDS': [
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
     ],
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_MODEL_SERIALIZER_CLASS': [
+        'rest_framework.serializers.ModelSerializer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 APPEND_SLASH = False
+
+SWAGGER_SETTINGS = {
+  'JSON_EDITOR': True,
+}

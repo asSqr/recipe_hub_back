@@ -1,0 +1,1 @@
+web: gunicorn --workers=3 app.wsgi --timeout 200 --log-file - --log-level debug
