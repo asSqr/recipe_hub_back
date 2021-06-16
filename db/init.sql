@@ -1,0 +1,3 @@
+CREATE DATABASE recipehub;
+CREATE ROLE admin LOGIN PASSWORD 'password';
+GRANT ALL PRIVILEGES ON DATABASE recipehub TO admin;

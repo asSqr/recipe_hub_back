@@ -1,0 +1,4 @@
+  
+-e __pycache__\\ndb.sqlite3\\n.DS_Store\\nlocal_settings.py 
+.env
+recipe_hub_back/local_settings.py
