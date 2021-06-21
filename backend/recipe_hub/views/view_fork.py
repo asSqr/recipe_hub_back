@@ -123,11 +123,10 @@ def mk_tree(mRepo):
     }),
     responses={200: 'OK', 400: 'Bad Request'})
 @api_view(['GET'])
-def fork_tree(request):
-  data = json.loads(request.body)
-  id_repo = data['id_repository']
+def fork_tree(request, id_repository):
+  print(id_repository)
 
-  mRepo = fetch_repo(id_repo)  
+  mRepo = fetch_repo(id_repository)  
 
   while mRepo.id_fork_from:
     mRepo = fetch_repo(id_fork_from)
