@@ -111,6 +111,12 @@ def mk_tree(mRepo):
     for id_repo in fork_list['list']:
       children.append(mk_tree(fetch_repo(id_repo)))
 
+  ret['id'] = str(mRepo.id)
+  ret['title'] = mRepo.title
+  ret['name'] = mRepo.name
+  ret['recipe'] = mRepo.recipe
+  ret['genre'] = mRepo.genre
+  ret['thumbnail'] = mRepo.thumbnail
   ret['next'] = children
 
   return ret
