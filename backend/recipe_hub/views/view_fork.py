@@ -129,7 +129,7 @@ def fork_tree(request, id_repository):
   mRepo = fetch_repo(id_repository)  
 
   while mRepo.id_fork_from:
-    mRepo = fetch_repo(id_fork_from)
+    mRepo = fetch_repo(str(mRepo.id_fork_from))
 
   tree = mk_tree(mRepo)
 
