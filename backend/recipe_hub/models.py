@@ -7,9 +7,13 @@ class MyUUIDModel(models.Model):
 
 class MRepository(MyUUIDModel):
   id_fork_from = models.CharField(max_length=36, null=True, blank=True)
+  id_fork_to_list = models.CharField(max_length=8192)
+  title = models.CharField(max_length=8192)
   name = models.CharField(max_length=8192)
   recipe = models.CharField(max_length=16384)
   id_author = models.CharField(max_length=36)
+  genre = models.CharField(max_length=8192)
+  thumbnail = models.ImageField(upload_to='images/')
   create_date = models.DateTimeField(default=timezone.now)
   update_date = models.DateTimeField(default=timezone.now)
 
