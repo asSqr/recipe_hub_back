@@ -145,7 +145,8 @@ STATIC_URL = '/static/'
 # TODO: 本番ビルド時はlocalhost等を無効化する
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://recipe-hub-front.vercel.app'
+    'https://recipe-hub-front.vercel.app',
+    'https://recipe-hub-front-dev.vercel.app'
 ]
 
 CORS_ALLOW_METHODS = [
