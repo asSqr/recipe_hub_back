@@ -146,7 +146,10 @@ STATIC_URL = '/static/'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://recipe-hub-front.vercel.app',
-    'https://recipe-hub-front-dev.vercel.app'
+    'https://recipe-hub-front-dev.vercel.app',
+    'https://recipe-hub-front-recipes.vercel.app',
+    'https://recipe-hub-front-tree.vercel.app',
+    'https://recipe-hub-front-create.vercel.app'
 ]
 
 CORS_ALLOW_METHODS = [
