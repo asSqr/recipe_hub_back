@@ -63,7 +63,9 @@ def fork(request):
   mRepoObj['title'] = title if title is not None else mRepo.title
   mRepoObj['recipe'] = recipe if recipe is not None else mRepo.recipe
   mRepoObj['genre'] = genre if genre is not None else mRepo.genre
-  mRepoObj['thumbnail'] = thumbnail if thumbnail is not None else mRepo.thumbnail
+
+  if thumbnail or mRepo.thumbnail:
+    mRepoObj['thumbnail'] = thumbnail if thumbnail is not None else mRepo.thumbnail 
 
   mRepoSerializer = MRepositorySerializer(data=mRepoObj)
 
