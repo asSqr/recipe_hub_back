@@ -116,6 +116,11 @@ def mk_tree(mRepo):
   ret['name'] = mRepo.name
   ret['recipe'] = mRepo.recipe
   ret['genre'] = mRepo.genre
+  ret['id_author'] = mRepo.id_author
+  if mRepo.thumbnail:
+    ret['thumbnail'] = str(mRepo.thumbnail.url)
+  ret['create_date'] = mRepo.create_date
+  ret['update_date'] = mRepo.update_date
   ret['next'] = children
 
   return ret
