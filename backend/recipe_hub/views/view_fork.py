@@ -57,13 +57,13 @@ def fork(request):
   mRepo = mRepo[0]
 
   mRepoObj = {}
-  mRepoObj['id_author'] = id_user
+  mRepoObj['id_author'] = id_user if id_user is not None else mRepo.id_author
   mRepoObj['id_fork_from'] = id_repo
-  mRepoObj['name'] = name
-  mRepoObj['title'] = title
-  mRepoObj['recipe'] = recipe
-  mRepoObj['genre'] = genre
-  mRepoObj['thumbnail'] = thumbnail
+  mRepoObj['name'] = name if name is not None else mRepo.name
+  mRepoObj['title'] = title if title is not None else mRepo.title
+  mRepoObj['recipe'] = recipe if recipe is not None else mRepo.recipe
+  mRepoObj['genre'] = genre if genre is not None else mRepo.genre
+  mRepoObj['thumbnail'] = thumbnail if thumbnail is not None else mRepo.thumbnail
 
   mRepoSerializer = MRepositorySerializer(data=mRepoObj)
 
@@ -91,7 +91,7 @@ def fork(request):
   else:
     return Response(mRepoSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-  return Response({'status': 'created'}, status=status.HTTP_201_CREATED)
+  return Response({'id': str(newMRepo.id)}, status=status.HTTP_201_CREATED)
 
 def fetch_repo(id_repo):
   mRepo = MRepository.objects.filter(id=id_repo)
