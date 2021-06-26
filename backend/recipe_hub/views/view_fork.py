@@ -41,13 +41,13 @@ sys.setrecursionlimit(1500)
 def fork(request):
   data = json.loads(request.body)
 
-  id_user = data['id_user']
-  id_repo = data['id_repo']
-  name = data['name']
-  title = data['title']
-  recipe = data['recipe']
-  genre = data['genre']
-  thumbnail = data['thumbnail']
+  id_user = data.get('id_user')
+  id_repo = data.get('id_repo')
+  name = data.get('name')
+  title = data.get('title')
+  recipe = data.get('recipe')
+  genre = data.get('genre')
+  thumbnail = data.get('thumbnail')
 
   mRepo = MRepository.objects.filter(id=id_repo)
 
