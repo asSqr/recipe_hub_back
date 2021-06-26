@@ -17,6 +17,7 @@ from drf_yasg.utils import swagger_auto_schema
 from datetime import datetime, timedelta, timezone
 
 import json
+import os
 import sys
 
 serverTZ = timezone(timedelta(hours=0), 'JST')
@@ -111,6 +112,8 @@ def mk_tree(mRepo):
     for id_repo in fork_list['list']:
       children.append(mk_tree(fetch_repo(id_repo)))
 
+  base_url = os.getenv('API_URL') if os.getenv('API_URL') is not None else 'http://localhost:8000'
+
   ret['id'] = str(mRepo.id)
   ret['title'] = mRepo.title
   ret['name'] = mRepo.name
@@ -118,7 +121,7 @@ def mk_tree(mRepo):
   ret['genre'] = mRepo.genre
   ret['id_author'] = mRepo.id_author
   if mRepo.thumbnail:
-    ret['thumbnail'] = str(mRepo.thumbnail.url)
+    ret['thumbnail'] = base_url + str(mRepo.thumbnail.url)
   ret['create_date'] = mRepo.create_date
   ret['update_date'] = mRepo.update_date
   ret['next'] = children
