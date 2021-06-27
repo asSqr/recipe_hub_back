@@ -105,15 +105,15 @@ def fetch_repo(id_repo):
 
 def patch_repo(mRepo, dict):
   mRepoObj = {}
-  mRepoObj['id_author'] = dict['id_author'] if dict['id_author'] is not None else mRepo.id_author
-  mRepoObj['id_fork_from'] = dict['id_fork_from'] if dict['id_fork_from'] is not None else mRepo.id_fork_from
-  mRepoObj['name'] = dict['name'] if dict['name'] is not None else mRepo.name
-  mRepoObj['title'] = dict['title'] if dict['title'] is not None else mRepo.title
-  mRepoObj['recipe'] = dict['recipe'] if dict['recipe'] is not None else mRepo.recipe
-  mRepoObj['genre'] = dict['genre'] if dict['genre'] is not None else mRepo.genre
+  mRepoObj['id_author'] = dict.get('id_author') if dict.get('id_author') is not None else mRepo.id_author
+  mRepoObj['id_fork_from'] = dict.get('id_fork_from') if dict.get('id_fork_from') is not None else mRepo.id_fork_from
+  mRepoObj['name'] = dict.get('name') if dict.get('name') is not None else mRepo.name
+  mRepoObj['title'] = dict.get('title') if dict.get('title') is not None else mRepo.title
+  mRepoObj['recipe'] = dict.get('recipe') if dict.get('recipe') is not None else mRepo.recipe
+  mRepoObj['genre'] = dict.get('genre') if dict.get('genre') is not None else mRepo.genre
 
-  if thumbnail or mRepo.thumbnail:
-    mRepoObj['thumbnail'] = dict['thumbnail'] if dict['thumbnail'] is not None else mRepo.thumbnail 
+  if dict.get('thumbnail') or mRepo.thumbnail:
+    mRepoObj['thumbnail'] = dict.get('thumbnail') if dict.get('thumbnail') is not None else mRepo.thumbnail 
 
   mRepoSerializer = MRepositorySerializer(mRepo, data=mRepoObj, partial=True)
 
