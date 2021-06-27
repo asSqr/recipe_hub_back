@@ -106,7 +106,7 @@ def fetch_repo(id_repo):
 def patch_repo(mRepo, param):
   mRepoObj = {}
   mRepoObj['id_author'] = param.get('id_author') if param.get('id_author') is not None else mRepo.id_author
-  mRepoObj['id_fork_from'] = param.get('id_fork_from') if param.get('id_fork_from') is not None else mRepo.id_fork_from
+  mRepoObj['id_fork_from'] = param.get('id_fork_from', '$') if param.get('id_fork_from', '$') != '$' else mRepo.id_fork_from
   mRepoObj['id_fork_to_list'] = param.get('id_fork_to_list') if param.get('id_fork_to_list') is not None else mRepo.id_fork_to_list
   mRepoObj['name'] = param.get('name') if param.get('name') is not None else mRepo.name
   mRepoObj['title'] = param.get('title') if param.get('title') is not None else mRepo.title
