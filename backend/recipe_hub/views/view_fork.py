@@ -42,6 +42,7 @@ def fork(request):
   data = json.loads(request.body)
 
   id_user = data.get('id_user')
+  author_photo_url = data.get('author_photo_url')
   id_repo = data.get('id_repo')
   name = data.get('name')
   title = data.get('title')
@@ -58,6 +59,7 @@ def fork(request):
 
   mRepoObj = {}
   mRepoObj['id_author'] = id_user if id_user is not None else mRepo.id_author
+  mRepoObj['author_photo_url'] = author_photo_url if author_photo_url is not None else mRepo.author_photo_url
   mRepoObj['id_fork_from'] = id_repo
   mRepoObj['name'] = name if name is not None else mRepo.name
   mRepoObj['title'] = title if title is not None else mRepo.title
@@ -106,6 +108,7 @@ def fetch_repo(id_repo):
 def patch_repo(mRepo, param):
   mRepoObj = {}
   mRepoObj['id_author'] = param.get('id_author') if param.get('id_author') is not None else mRepo.id_author
+  mRepoObj['author_photo_url'] = param.get('author_photo_url') if param.get('author_photo_url') is not None else mRepo.author_photo_url
   mRepoObj['id_fork_from'] = param.get('id_fork_from', '$') if param.get('id_fork_from', '$') != '$' else mRepo.id_fork_from
   mRepoObj['id_fork_to_list'] = param.get('id_fork_to_list') if param.get('id_fork_to_list') is not None else mRepo.id_fork_to_list
   mRepoObj['name'] = param.get('name') if param.get('name') is not None else mRepo.name
@@ -144,6 +147,8 @@ def mk_tree(mRepo):
   ret['recipe'] = mRepo.recipe
   ret['genre'] = mRepo.genre
   ret['id_author'] = mRepo.id_author
+  if mRepo.author_photo_url:
+    ret['author_photo_url'] = mRepo.author_photo_url
   if mRepo.thumbnail:
     ret['thumbnail'] = base_url + str(mRepo.thumbnail.url)
   ret['create_date'] = mRepo.create_date

@@ -26,6 +26,7 @@ class MRepository(MyUUIDModel):
   name = models.CharField(max_length=8192)
   recipe = models.CharField(max_length=16384)
   id_author = models.CharField(max_length=36)
+  author_photo_url = models.CharField(max_length=8192, default="")
   genre = models.CharField(max_length=8192)
   thumbnail = models.ImageField(upload_to=path_and_rename, null=True, blank=True)
   create_date = models.DateTimeField(default=timezone.now)
