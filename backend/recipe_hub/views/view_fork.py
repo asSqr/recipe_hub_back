@@ -103,17 +103,17 @@ def fetch_repo(id_repo):
 
   return mRepo[0]
 
-def patch_repo(mRepo, dict):
+def patch_repo(mRepo, param):
   mRepoObj = {}
-  mRepoObj['id_author'] = dict.get('id_author') if dict.get('id_author') is not None else mRepo.id_author
-  mRepoObj['id_fork_from'] = dict.get('id_fork_from') if dict.get('id_fork_from') is not None else mRepo.id_fork_from
-  mRepoObj['name'] = dict.get('name') if dict.get('name') is not None else mRepo.name
-  mRepoObj['title'] = dict.get('title') if dict.get('title') is not None else mRepo.title
-  mRepoObj['recipe'] = dict.get('recipe') if dict.get('recipe') is not None else mRepo.recipe
-  mRepoObj['genre'] = dict.get('genre') if dict.get('genre') is not None else mRepo.genre
+  mRepoObj['id_author'] = param.get('id_author') if param.get('id_author') is not None else mRepo.id_author
+  mRepoObj['id_fork_from'] = param.get('id_fork_from') if param.get('id_fork_from') is not None else mRepo.id_fork_from
+  mRepoObj['name'] = param.get('name') if param.get('name') is not None else mRepo.name
+  mRepoObj['title'] = param.get('title') if param.get('title') is not None else mRepo.title
+  mRepoObj['recipe'] = param.get('recipe') if param.get('recipe') is not None else mRepo.recipe
+  mRepoObj['genre'] = param.get('genre') if param.get('genre') is not None else mRepo.genre
 
-  if dict.get('thumbnail') or mRepo.thumbnail:
-    mRepoObj['thumbnail'] = dict.get('thumbnail') if dict.get('thumbnail') is not None else mRepo.thumbnail 
+  if param.get('thumbnail') or mRepo.thumbnail:
+    mRepoObj['thumbnail'] = param.get('thumbnail') if param.get('thumbnail') is not None else mRepo.thumbnail 
 
   mRepoSerializer = MRepositorySerializer(mRepo, data=mRepoObj, partial=True)
 
@@ -172,7 +172,7 @@ def fork_tree(request, id_repository):
   return Response(tree, status=status.HTTP_200_OK)
 
 def deleteForkFrom(id_repo):
-  mRepo = MRepository.objects.filter(id=id_repo)
+  mRepo = fetch_repo(id_repo)
 
   patch_repo(mRepo, {
     'id_fork_from': None
