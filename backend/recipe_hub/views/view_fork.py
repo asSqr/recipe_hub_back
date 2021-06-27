@@ -107,6 +107,7 @@ def patch_repo(mRepo, param):
   mRepoObj = {}
   mRepoObj['id_author'] = param.get('id_author') if param.get('id_author') is not None else mRepo.id_author
   mRepoObj['id_fork_from'] = param.get('id_fork_from') if param.get('id_fork_from') is not None else mRepo.id_fork_from
+  mRepoObj['id_fork_to_list'] = param.get('id_fork_to_list') if param.get('id_fork_to_list') is not None else mRepo.id_fork_to_list
   mRepoObj['name'] = param.get('name') if param.get('name') is not None else mRepo.name
   mRepoObj['title'] = param.get('title') if param.get('title') is not None else mRepo.title
   mRepoObj['recipe'] = param.get('recipe') if param.get('recipe') is not None else mRepo.recipe
@@ -119,7 +120,7 @@ def patch_repo(mRepo, param):
 
   if mRepoSerializer.is_valid(raise_exception=True):
     print(mRepoSerializer.errors)
-    newMRepo = mRepoSerializer.save()
+    mRepoSerializer.save()
   else:
     return Response(mRepoSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -214,6 +215,4 @@ def repo(request, id_repository):
 
   mRepo.delete()
 
-  tree = mk_tree(mRepo)
-
-  return Response(tree, status=status.HTTP_200_OK)
+  return Response({}, status=status.HTTP_200_OK)
