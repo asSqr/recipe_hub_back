@@ -199,7 +199,7 @@ def repo(request, id_repository):
   if mRepo.id_fork_from and 'list' in fork_list:
     for id_repo in fork_list['list']:
       setForkFrom(id_repo, mRepo.id_fork_from)
-  else:
+  elif 'list' in fork_list:
     for id_repo in fork_list['list']:
       deleteForkFrom(id_repo)
 
