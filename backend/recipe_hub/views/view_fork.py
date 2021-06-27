@@ -172,6 +172,13 @@ def fork_tree(request, id_repository):
 
   return Response(tree, status=status.HTTP_200_OK)
 
+def setForkFrom(id_repo, id_fork_from):
+  mRepo = fetch_repo(id_repo)
+
+  patch_repo(mRepo, {
+    'id_fork_from': id_fork_from
+  })
+
 def deleteForkFrom(id_repo):
   mRepo = fetch_repo(id_repo)
 
@@ -187,31 +194,21 @@ def repo(request, id_repository):
 
   mRepo = fetch_repo(id_repository)  
 
+  fork_list = json.loads(mRepo.id_fork_to_list)
+
+  if mRepo.id_fork_from and 'list' in fork_list:
+    for id_repo in fork_list['list']:
+      setForkFrom(id_repo, mRepo.id_fork_from)
+  else:
+    for id_repo in fork_list['list']:
+      deleteForkFrom(id_repo)
+
   if mRepo.id_fork_from:
     mParent = fetch_repo(str(mRepo.id_fork_from))
 
-    fork_list = json.loads(mParent.id_fork_to_list)
-
-    new_list = []
-
-    if 'list' in fork_list:
-      for id_repo in fork_list['list']:
-        if id_repo == str(mRepo.id):
-          continue
-
-        new_list.append(id_repo)
-
-    fork_list['list'] = new_list 
-
     patch_repo(mParent, {
-      'id_fork_to_list': json.dumps(fork_list)
+      'id_fork_to_list': mRepo.id_fork_to_list
     })
-
-  fork_list = json.loads(mRepo.id_fork_to_list)
-
-  if 'list' in fork_list:
-    for id_repo in fork_list['list']:
-      deleteForkFrom(id_repo)
 
   mRepo.delete()
 
