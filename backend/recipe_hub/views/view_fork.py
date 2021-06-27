@@ -52,7 +52,7 @@ def fork(request):
   mRepo = MRepository.objects.filter(id=id_repo)
 
   if len(mRepo) != 1:
-    raise ValueError('Illegal Argument: id_repo is not unique')
+    raise ValueError('Illegal Argument: id_repo is not unique {}'.format(id_repo))
 
   mRepo = mRepo[0]
 
@@ -99,9 +99,30 @@ def fetch_repo(id_repo):
   mRepo = MRepository.objects.filter(id=id_repo)
 
   if len(mRepo) != 1:
-    raise ValueError('Illegal Argument: id_repo is not unique')
+    raise ValueError('Illegal Argument: id_repo is not unique {}'.format(id_repo))
 
   return mRepo[0]
+
+def patch_repo(mRepo, dict):
+  mRepoObj = {}
+  mRepoObj['id_author'] = dict['id_author'] if dict['id_author'] is not None else mRepo.id_author
+  mRepoObj['id_fork_from'] = dict['id_fork_from'] if dict['id_fork_from'] is not None else mRepo.id_fork_from
+  mRepoObj['name'] = dict['name'] if dict['name'] is not None else mRepo.name
+  mRepoObj['title'] = dict['title'] if dict['title'] is not None else mRepo.title
+  mRepoObj['recipe'] = dict['recipe'] if dict['recipe'] is not None else mRepo.recipe
+  mRepoObj['genre'] = dict['genre'] if dict['genre'] is not None else mRepo.genre
+
+  if thumbnail or mRepo.thumbnail:
+    mRepoObj['thumbnail'] = dict['thumbnail'] if dict['thumbnail'] is not None else mRepo.thumbnail 
+
+  mRepoSerializer = MRepositorySerializer(mRepo, data=mRepoObj, partial=True)
+
+  if mRepoSerializer.is_valid(raise_exception=True):
+    print(mRepoSerializer.errors)
+    newMRepo = mRepoSerializer.save()
+  else:
+    return Response(mRepoSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 def mk_tree(mRepo):
   fork_list = json.loads(mRepo.id_fork_to_list)
@@ -145,6 +166,53 @@ def fork_tree(request, id_repository):
 
   while mRepo.id_fork_from:
     mRepo = fetch_repo(str(mRepo.id_fork_from))
+
+  tree = mk_tree(mRepo)
+
+  return Response(tree, status=status.HTTP_200_OK)
+
+def deleteForkFrom(id_repo):
+  mRepo = MRepository.objects.filter(id=id_repo)
+
+  patch_repo(mRepo, {
+    'id_fork_from': None
+  })
+
+@transaction.atomic
+@swagger_auto_schema(methods=['delete'], responses={201: 'Created', 400: 'Bad Request'})
+@api_view(['DELETE'])
+def repo(request, id_repository):
+  print(id_repository)
+
+  mRepo = fetch_repo(id_repository)  
+
+  if mRepo.id_fork_from:
+    mParent = fetch_repo(str(mRepo.id_fork_from))
+
+    fork_list = json.loads(mParent.id_fork_to_list)
+
+    new_list = []
+
+    if 'list' in fork_list:
+      for id_repo in fork_list['list']:
+        if id_repo == str(mRepo.id):
+          continue
+
+        new_list.append(id_repo)
+
+    fork_list['list'] = new_list 
+
+    patch_repo(mParent, {
+      'id_fork_to_list': json.dumps(fork_list)
+    })
+
+  fork_list = json.loads(mRepo.id_fork_to_list)
+
+  if 'list' in fork_list:
+    for id_repo in fork_list['list']:
+      deleteForkFrom(id_repo)
+
+  mRepo.delete()
 
   tree = mk_tree(mRepo)
 

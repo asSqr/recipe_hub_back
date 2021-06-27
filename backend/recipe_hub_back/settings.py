@@ -149,7 +149,8 @@ CORS_ALLOWED_ORIGINS = [
     'https://recipe-hub-front-dev.vercel.app',
     'https://recipe-hub-front-recipes.vercel.app',
     'https://recipe-hub-front-tree.vercel.app',
-    'https://recipe-hub-front-create.vercel.app'
+    'https://recipe-hub-front-create.vercel.app',
+    'https://recipe-hub-front-ysmr.vercel.app'
 ]
 
 CORS_ALLOW_METHODS = [
