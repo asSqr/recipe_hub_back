@@ -206,8 +206,16 @@ def repo(request, id_repository):
   if mRepo.id_fork_from:
     mParent = fetch_repo(str(mRepo.id_fork_from))
 
+    parent_fork_list = json.loads(mParent.id_fork_to_list)
+
+    if 'list' in fork_list:
+      for id_repo in fork_list['list']: 
+        parent_fork_list['list'].append(id_repo)   
+
+    parent_fork_list['list'].remove(str(mRepo.id))
+
     patch_repo(mParent, {
-      'id_fork_to_list': mRepo.id_fork_to_list
+      'id_fork_to_list': json.dumps(parent_fork_list)
     })
 
   mRepo.delete()
