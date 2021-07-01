@@ -17,7 +17,7 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production
@@ -30,12 +30,12 @@ SECRET_KEY = 'ht$2fsx24of&err#+_#a&v0hyfht7tfm*s54gc!@-t@89(mou5'
 DEBUG = True
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
-# STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
+STATIC_URL = "/static/"
 
-# STATICFILES_DIRS = (
-#    os.path.join(BASE_DIR, 'static'),
-# )
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'static'),
+)
 
 ALLOWED_HOSTS = ['*']  # 環境によっては変更可能性アリ
 
@@ -202,4 +202,4 @@ SWAGGER_SETTINGS = {
   'JSON_EDITOR': True,
 }
 
-from recipe-hub-back.aws.conf import *
+from recipe_hub_back.aws.conf import *
