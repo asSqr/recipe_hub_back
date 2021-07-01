@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework',  # django-rest
     'corsheaders',  # 認証
     'rest_framework_swagger',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -202,3 +203,5 @@ APPEND_SLASH = False
 SWAGGER_SETTINGS = {
   'JSON_EDITOR': True,
 }
+
+from recipe-hub-back.aws.conf import *
