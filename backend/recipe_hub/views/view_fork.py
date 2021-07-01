@@ -142,8 +142,6 @@ def mk_tree(mRepo):
     for id_repo in fork_list['list']:
       children.append(mk_tree(fetch_repo(id_repo)))
 
-  base_url = os.getenv('API_URL') if os.getenv('API_URL') is not None else 'http://localhost:8000'
-
   ret['id'] = str(mRepo.id)
   ret['title'] = mRepo.title
   ret['name'] = mRepo.name
@@ -155,7 +153,7 @@ def mk_tree(mRepo):
   if mRepo.author_photo_url:
     ret['author_photo_url'] = mRepo.author_photo_url
   if mRepo.thumbnail:
-    ret['thumbnail'] = base_url + str(mRepo.thumbnail.url)
+    ret['thumbnail'] = str(mRepo.thumbnail.url)
   ret['create_date'] = mRepo.create_date
   ret['update_date'] = mRepo.update_date
   ret['next'] = children
