@@ -30,6 +30,7 @@ class MRepository(MyUUIDModel):
   author_photo_url = models.CharField(max_length=8192, default="")
   genre = models.CharField(max_length=8192)
   thumbnail = models.ImageField(upload_to=path_and_rename, null=True, blank=True)
+  is_temp = models.BooleanField(default=False)
   create_date = models.DateTimeField(default=timezone.now)
   update_date = models.DateTimeField(default=timezone.now)
 
@@ -39,3 +40,7 @@ class MUser(MyUUIDModel):
   email = models.EmailField()
   create_date = models.DateTimeField(default=timezone.now)
   update_date = models.DateTimeField(default=timezone.now)
+
+class MImage(MyUUIDModel):
+  id_author = models.CharField(max_length=8192)
+  image = models.ImageField(upload_to=path_and_rename)

@@ -67,6 +67,7 @@ def fork(request):
   mRepoObj['title'] = title if title is not None else mRepo.title
   mRepoObj['recipe'] = recipe if recipe is not None else mRepo.recipe
   mRepoObj['genre'] = genre if genre is not None else mRepo.genre
+  mRepoObj['is_temp'] = True
 
   if thumbnail or mRepo.thumbnail:
     mRepoObj['thumbnail'] = thumbnail if thumbnail is not None else mRepo.thumbnail 
@@ -229,3 +230,12 @@ def repo(request, id_repository):
   mRepo.delete()
 
   return Response({}, status=status.HTTP_200_OK)
+
+@transaction.atomic
+@swagger_auto_schema(methods=['get'],
+    responses={200: 'OK', 400: 'Bad Request'})
+@api_view(['GET'])
+def repo_select(request):
+  mRepoList = MRepository.objects.filter(is_temp=False)
+
+  return Response(MRepositorySerializer(mRepoList, many=True).data, status.HTTP_200_OK)

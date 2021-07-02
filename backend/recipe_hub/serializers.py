@@ -13,6 +13,11 @@ class MRepositorySerializer(serializers.ModelSerializer):
     model = MRepository
     fields = '__all__'
 
+class MImageSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = MImage
+    fields = '__all__'
+
 class MUserSerializer(serializers.ModelSerializer):
   password = serializers.CharField(
       write_only=True,
