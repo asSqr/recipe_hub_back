@@ -17,3 +17,7 @@ class MUserViewSet(ModelViewSet):
 class MRepositoryViewSet(ModelViewSet):
   serializer_class = MRepositorySerializer
   queryset = MRepository.objects.all()
+
+class MImageViewSet(ModelViewSet):
+  serializer_class = MImageSerializer
+  queryset = MImage.objects.all()

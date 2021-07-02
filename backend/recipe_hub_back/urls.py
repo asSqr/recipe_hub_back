@@ -27,6 +27,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 router = routers.DefaultRouter()
 router.register('muser', views.MUserViewSet, basename='MUser')
 router.register('mrepository', views.MRepositoryViewSet, basename='MRepository')
+router.register('mimage', views.MImageViewSet, basename='MImage')
 
 schema_view = get_schema_view(
    openapi.Info(
